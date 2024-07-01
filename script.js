@@ -24,23 +24,28 @@ droppables.forEach((zone) => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const value = taskInput.value;
+  const value = taskInput.value.trim(); // Trim whitespace from the input value
 
-  const newTask = document.createElement("p");
-  newTask.classList.add("task");
-  newTask.setAttribute("draggable", "true");
-  newTask.innerText = value;
-  console.log(newTask.innerText);
+  if (value) { // Check if the trimmed value is not empty
+    const newTask = document.createElement("p");
+    newTask.classList.add("task");
+    newTask.setAttribute("draggable", "true");
+    newTask.innerText = value;
+    console.log(newTask.innerText);
 
-  newTask.addEventListener("dragstart", () => {
-    newTask.classList.add("is-dragging");
-  });
-  newTask.addEventListener("dragend", () => {
-    newTask.classList.remove("is-dragging");
-  });
-  tasklane.appendChild(newTask);
-  taskInput.value = "";
-  saveTasks();
+    newTask.addEventListener("dragstart", () => {
+      newTask.classList.add("is-dragging");
+    });
+    newTask.addEventListener("dragend", () => {
+      newTask.classList.remove("is-dragging");
+    });
+    tasklane.appendChild(newTask);
+    taskInput.value = "";
+    saveTasks();
+  } else {
+    // Optionally, show an alert or message indicating that the task cannot be empty
+    alert("Task cannot be empty!");
+  }
 });
 
 function saveTasks() {
